@@ -1,5 +1,3 @@
-#require 'twitter_client'
-
 class WelcomeController < ApplicationController
   def index
     tc = TwitterClient.new
@@ -7,9 +5,13 @@ class WelcomeController < ApplicationController
     @client = tc.client 
 
     if params[:mark_read]
-      tweet = Tweet.find(params[:mark_read])
-      tweet.read = 1
-      tweet.save
+      begin
+        tweet = Tweet.find(params[:mark_read])
+        tweet.read = 1
+        tweet.save
+      rescue ActiveRecord::RecordNotFound
+        @message_error = 'Record Not Found'
+      end
     end
 
     if params[:u] && params[:u] != '' 

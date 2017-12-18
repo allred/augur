@@ -14,12 +14,10 @@
         <div class="input-group mb-2 mb-sm-0">
           <div class="input-group-addon">@</div>
           <input name="u" id="searchBox" type="search" class="form-control" placeholder="Username"
-          <% if params[:u] %>
-            value="<%= params[:u] %>"
-          <% end %>
-
-                                                                            
-                                      ></input>
+            <% if params[:u] %>
+              value="<%= params[:u] %>"
+            <% end %>
+          ></input>
         </div>
       </div>
       <div class="col-auto">
@@ -27,21 +25,25 @@
       </div>
     </div>
   </form>
-</div>
+  <p />
 
-<% if @tweets_unread %>
-  <div class="queryResults" class="list-group">
-    <% @tweets_unread.each do |t| %>
-      <form>
-        <button type="submit" class="btn btn-outline-secondary btn-small">Mark Read</button>
-        <input type="hidden" name="u" value="<%= params[:u] %>">
-        <input type="hidden" name="mark_read" value="<%= t.id %>">
-        <%= t.text %>
-      </form>
-    <% end %>
-  </div>
+  <% if @message_error != "" %>
+    <div class="alert alert-danger" role="alert">
+      Error: <%= @message_error %>
+    </div>
+  <% end %>
+
+  <% if @tweets_unread %>
+    <div class="queryResults" class="list-group">
+      <% @tweets_unread.each do |t| %>
+        <form>
+          <button type="submit" class="btn btn-outline-secondary btn-small">Mark Read</button>
+          <input type="hidden" name="u" value="<%= params[:u] %>">
+          <input type="hidden" name="mark_read" value="<%= t.id %>">
+          <%= t.text %>
+        </form>
+      <% end %>
+    </div>
 <% end %>
-<% if @message_error != "" %>
-  Error:
-  <%= @message_error %>
-<% end %>
+
+</div>
